@@ -5,6 +5,7 @@
 def db_create
   data_path = File.dirname(__FILE__) + "/data.csv"
   if !File.exist?(data_path)
+      puts "test"
     CSV.open(data_path, "wb") do |csv|
       csv << ["id", "brand", "product", "price"]
     end
