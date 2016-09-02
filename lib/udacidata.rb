@@ -7,10 +7,10 @@ class Udacidata
      @@data_path = File.dirname(__FILE__) + "/../data/data.csv"
 
       def self.create(attributes = nil)
-          item_in_database = item_exists(attributes)
+          item_in_database = item_exists(self.new(attributes))
           if item_in_database.length == 1
-              attributes[:id] = item_in_database.first.id
-              return self.new(attributes)
+              #attributes[:id] = item_in_database.first.id
+              return item_in_database
           else
               new_item = self.new(attributes)
               add_to_database(new_item)
@@ -32,8 +32,8 @@ class Udacidata
           end
       end
 
-     def self.item_exists(attributes = nil)
-         return all.select{ |item| item.brand == attributes[:brand] && item.name == attributes[:name] && item.price == attributes[:price] }
+     def self.item_exists(product)
+         return all.select{ |item| item.id == product.id && item.brand == product.brand && item.name == product.name && item.price == product.price }
      end
 
      def self.first(number_of_item = 0)
@@ -94,15 +94,15 @@ class Udacidata
         table.each do |row|
             if row[:id].to_i == self.id
                 if attributes[:brand]
-                    row["brand"] = attributes[:brand]
+                    row[:brand] = attributes[:brand]
                     self.brand = attributes[:brand]
                 end
                 if attributes[:name]
-                    row["product"] = attributes[:name]
+                    row[:product] = attributes[:name]
                     self.name = attributes[:name]
                 end
                 if attributes[:price]
-                    row["price"] = attributes[:price]
+                    row[:price] = attributes[:price]
                     self.price = attributes[:price]
                 end
             end
