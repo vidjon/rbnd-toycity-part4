@@ -130,5 +130,5 @@ print Product.create(brand: "Udacity", name: "doll", price: 5.99)
 # puts "--------------------"
 # puts "PRINT SUMMARY REPORT"
 # puts "--------------------"
-# print Analyzable::print_report(Product.all)
+ print Analyzable::print_report(Product.all)
 # puts
