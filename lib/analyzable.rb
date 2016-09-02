@@ -10,10 +10,10 @@ module Analyzable
       string = ''
       hash.each do |key, value|
           if key == "Average Price"
-              string += key + ": $" + value.to_s
+              string += "%s : $%s " % [key, value.to_s]
           else
-             string += "Inventory by " + key + ":"
-             value.each do |key2, value2| string += "- " + key2 + ": " +value2.to_s end
+             string += "Inventory by %s: " % key
+             value.each do |key2, value2| string += "- %s: %s " % [key2, value2.to_s] end
           end
       end
       return string

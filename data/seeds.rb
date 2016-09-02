@@ -4,11 +4,7 @@ require 'faker'
 # fake data for testing purposes
 
 def db_seed
-  Product.create(brand: "Udacity1", name: "yoyo", price: 10.00)
-  Product.create(brand: "Udacity2", name: "yoyo", price: 10.00)
-  Product.create(brand: "Udacity3", name: "yoyo", price: 10.00)
-  Product.create(brand: "Udacity4", name: "yoyo", price: 10.00)
-  Product.create(brand: "Udacity5", name: "yoyo", price: 10.00)
-  Product.create(brand: "Udacity6", name: "yoyo", price: 10.00)
-  Product.create(brand: "Udacity7", name: "yoyo", price: 10.00)
+    for i in 1..10
+        Product.create(brand: Faker::Company.name, name: Faker::Commerce.product_name, price: Faker::Commerce.price)
+    end
 end
