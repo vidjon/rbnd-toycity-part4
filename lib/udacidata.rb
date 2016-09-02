@@ -45,11 +45,14 @@ class Udacidata
      end
 
      def self.find(item_id)
-         return all.select{|item| item.id == item_id}.first
+         item = all.select{|item| item.id == item_id}.first
+         raise ProductNotFoundError , "Product not found with id #{item_id.to_s}" if item == nil
+         return item
      end
 
      def self.destroy(item_id)
          table = CSV.table(@@data_path)
+         #raise ProductNotFoundError , "Product #{item_id.to_s} not found to destroy" if (table.length == 0 || (table.length + 1) > item_id)
          product_to_delete = find(item_id)
          table.delete_if do |row|
              row[:id].to_i == item_id
@@ -61,13 +64,22 @@ class Udacidata
         return product_to_delete
      end
 
-    def self.find_by_brand(brand_name)
-         return all.select{|item| item.brand == brand_name}.first
+    def self.method_missing(method_name, *arguments)
+        if method_name.to_s.start_with?("find_by_")
+            length_of_find_by = "find_by_".length
+            argument = method_name[length_of_find_by..method_name.length - 1]
+            create_finder_methods(argument)
+            self.public_send(method_name, *arguments)
+        end
     end
 
-    def self.find_by_name(product_name)
-        return all.select{|item| item.name == product_name}.first
-    end
+    #def self.find_by_brand(brand_name)
+    #     return all.select{|item| item.brand == brand_name}.first
+    #end
+
+    #def self.find_by_name(product_name)
+    #    return all.select{|item| item.name == product_name}.first
+    #end
 
     def self.where(attributes={})
         return all.select{|item|(!attributes[:id] || item.id == attributes[:id]) &&

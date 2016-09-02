@@ -14,6 +14,7 @@ class TestUdacidata < MiniTest::Test
 
   def test_create_method_adds_to_database
     before = CSV.read(@data_path).length
+    #I added this since I dont allow to push items to the database that have brand and product_name
     number = ["1","2","3","4","5"]
     5.times do |i|
       Product.create(brand: "WalterToys#{number[i]}", name: "Sticky Notes", price: 34.00)
